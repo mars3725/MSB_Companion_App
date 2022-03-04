@@ -7,7 +7,13 @@ List<Event> events = [
       start: const TimeOfDay(hour: 5, minute: 0),
       end: const TimeOfDay(hour: 8, minute: 0),
       name: 'Super Cool Event',
-      color: Colors.green)
+      color: Colors.green),
+  Event(
+      start: const TimeOfDay(hour: 15, minute: 0),
+      end: const TimeOfDay(hour: 16, minute: 0),
+      name: 'Another Event',
+      color: Colors.orange),
+
 ];
 
 //Home

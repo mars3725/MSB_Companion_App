@@ -34,9 +34,15 @@ class _ScheduleState extends State<Schedule> {
                 for (var e in events) {
                   if (e.start.hour <= time.hour && e.end.hour > time.hour) {
                     return GridTile(child: Container(
-                        color: e.color,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(e.start.hour == time.hour? 10 : 0),
+                                bottom: Radius.circular(e.end.hour == time.hour+1? 10 : 0)
+                            ),
+                            color: e.color
+                        ),
                         child: time.hour == (e.start.hour + e.end.hour)~/2?
-                              Center(child: Text(e.name, textAlign: TextAlign.center))
+                        Center(child: Text(e.name, textAlign: TextAlign.center))
                             : null)
                     );
                   }
