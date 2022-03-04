@@ -10,7 +10,7 @@ List<Event> events = [
       color: Colors.green),
   Event(
       start: const TimeOfDay(hour: 15, minute: 0),
-      end: const TimeOfDay(hour: 16, minute: 0),
+      end: const TimeOfDay(hour: 17, minute: 0),
       name: 'Another Event',
       color: Colors.orange),
 

@@ -27,29 +27,40 @@ class _ScheduleState extends State<Schedule> {
             children: List.generate(TimeOfDay.hoursPerDay*2, (index) {
               TimeOfDay time = TimeOfDay(hour: index~/2, minute: 0);
 
-              if (index % 2 == 0) {
-                return GridTile(child: Text(time.format(context)));
+              Border border = const Border.symmetric(horizontal: BorderSide(color: Colors.black));
+              Widget child = Container();
+              Color? color;
 
+              if (index % 2 == 0) {
+                child = Text(time.format(context));
               } else {
                 for (var e in events) {
                   if (e.start.hour <= time.hour && e.end.hour > time.hour) {
-                    return GridTile(child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(e.start.hour == time.hour? 10 : 0),
-                                bottom: Radius.circular(e.end.hour == time.hour+1? 10 : 0)
-                            ),
-                            color: e.color
-                        ),
-                        child: time.hour == (e.start.hour + e.end.hour)~/2?
-                        Center(child: Text(e.name, textAlign: TextAlign.center))
-                            : null)
+                    border = Border(
+                        top: time.hour == e.start.hour? const BorderSide() : BorderSide.none,
+                        bottom: time.hour == e.end.hour-1? const BorderSide() : BorderSide.none
                     );
+
+                    double middle = (e.start.hour + e.end.hour)/2;
+                    if (time.hour == middle.toInt()) {
+                      if (middle % 1 == 0.5) {
+                        child = Center(child: Text(
+                            e.name, textAlign: TextAlign.center));
+                      } else {
+                        child = Text(
+                            e.name, textAlign: TextAlign.center);
+                      }
+                    }
+
+                    color = e.color;
                   }
                 }
-
-                return Container();
               }
+
+              return Container(
+                  decoration: BoxDecoration(border: border, color: color),
+                  child: child
+              );
             })
         )
         )
