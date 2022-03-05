@@ -18,7 +18,7 @@ class Nav extends StatefulWidget {
 }
 
 class _NavState extends State<Nav> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -29,11 +29,16 @@ class _NavState extends State<Nav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 100),
-          child: Nav.widgetOptions.elementAt(_selectedIndex),
-        ),
+      body: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onHorizontalDragEnd: (drag) {
+          if (!drag.primaryVelocity!.isNegative && _selectedIndex > 0) {
+            setState(() => _selectedIndex--);
+          } else if (drag.primaryVelocity!.isNegative && _selectedIndex < 2) {
+            setState(() => _selectedIndex++);
+          }
+        },
+        child: Nav.widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
