@@ -41,6 +41,7 @@ class _NavState extends State<Nav> {
         child: Nav.widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        selectedIconTheme: Theme.of(context).iconTheme.copyWith(color: Theme.of(context).colorScheme.primary),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.schedule),

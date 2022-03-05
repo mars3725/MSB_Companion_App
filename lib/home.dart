@@ -26,10 +26,10 @@ class _HomeState extends State<Home> {
           Expanded(
             child: CustomPaint(
               foregroundPainter: RadialPainter(
-                  bgColor: Colors.grey.shade200,
-                  lineColor: Theme.of(context).primaryColor,
+                  bgColor: Theme.of(context).colorScheme.inverseSurface,
+                  lineColor: Theme.of(context).colorScheme.primary,
                   percent: batteryPercentage.toDouble(),
-                  width: 15.0),
+                  width: 25),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

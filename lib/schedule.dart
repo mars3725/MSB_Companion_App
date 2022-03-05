@@ -32,12 +32,15 @@ class _ScheduleState extends State<Schedule> {
               children: List.generate(TimeOfDay.hoursPerDay*2, (index) {
                 TimeOfDay time = TimeOfDay(hour: index~/2, minute: 0);
 
-                Border _border = const Border.symmetric(horizontal: BorderSide(color: Colors.black));
+                Border _border = Border.symmetric(horizontal: BorderSide(color: Theme.of(context).colorScheme.inverseSurface));
                 Widget _child = Container();
                 Color? _color;
 
                 if (index % 2 == 0) {
-                  _child = Text(time.format(context));
+                  _child = Text(
+                      time.format(context).splitMapJoin(':00', onMatch: (match) => ''),
+                      style: const TextStyle(fontSize: 18)
+                  );
                 } else {
                   for (var e in events) {
                     if (e.start.hour <= time.hour && e.end.hour > time.hour) {
@@ -50,10 +53,14 @@ class _ScheduleState extends State<Schedule> {
                       if (time.hour == middle.toInt()) {
                         if (middle % 1 == 0.5) {
                           _child = Center(child: Text(
-                              e.name, textAlign: TextAlign.center));
+                              e.name,
+                              style: const TextStyle(fontSize: 18),
+                              textAlign: TextAlign.center));
                         } else {
                           _child = Text(
-                              e.name, textAlign: TextAlign.center);
+                              e.name,
+                              style: const TextStyle(fontSize: 18),
+                              textAlign: TextAlign.center);
                         }
                       }
 

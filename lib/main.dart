@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 import 'nav.dart';
 import 'login.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -16,15 +22,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       showSemanticsDebugger: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-          brightness: Brightness.dark,
-          primaryColor: Colors.green.shade800,
-          appBarTheme: AppBarTheme(backgroundColor: Colors.grey.shade900),
-          bottomAppBarColor: Colors.grey.shade900
-      ),
+      theme: ThemeData.from(colorScheme: ColorScheme.dark(
+          primary: Colors.green.shade800,
+          secondary: Colors.black87)),
       initialRoute: '/login',
       routes: {
-        "/login": (context)=> const Login(),
+        "/login": (context)=> Login(),
         "/home": (context)=> const Nav()
       },
     );
