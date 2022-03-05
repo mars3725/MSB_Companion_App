@@ -29,8 +29,8 @@ class RadialPainter extends CustomPainter {
     canvas.drawCircle(center, radius, bgLine);
     canvas.drawArc(
         Rect.fromCircle(center: center, radius: radius),
-        pi,
-        sweepAngle,
+        -pi/2,
+        -sweepAngle,
         false,
         completedLine
     );

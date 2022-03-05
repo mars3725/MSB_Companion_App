@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -20,48 +21,65 @@ class _SettingsState extends State<Settings> {
       body: Column(
         children: <Widget>[
           const Padding(
-            padding: EdgeInsets.only(top: 100, bottom: 15),
+            padding: EdgeInsets.only(top: 100, bottom: 50),
             child: Text('Settings',
                 style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold)),
           ),
           Expanded(child:
           ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 50),
             children: [
+              const Text('Robot Options',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)
+              ),
+              TextField(
+                decoration: const InputDecoration(label: Text('Name')),
+                controller: _nameFieldController,
+                onChanged: (value) {
+                  setState(() => name = value);
+                  pushData().then(
+                          (success) => print('updated: $success')
+                  );
+                },
+              ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Enabled'),
-                  Checkbox(value: enabled, onChanged: (value) {
+                  Checkbox(value: enabled,
+                      activeColor: Theme.of(context).colorScheme.primary,
+                      onChanged: (value) {
                     setState(() => enabled = value!);
                     pushData().then(
                             (success) => print('updated: $success')
                     );
-                  })
+                  }),
+                  const Text('Enabled')
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Lock Movement'),
-                  Checkbox(value: movementLocked, onChanged: (value) {
+                  Checkbox(value: movementLocked,
+                      activeColor: Theme.of(context).colorScheme.primary,
+                      onChanged: (value) {
                     setState(() => movementLocked = value!);
                     pushData().then(
                             (success) => print('updated: $success')
                     );
-                  })
+                  }),
+                  const Text('Lock Movement')
                 ],
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('Allow Sleep'),
-                  Checkbox(value: allowSleep, onChanged: (value) {
+                  Checkbox(value: allowSleep,
+                      activeColor: Theme.of(context).colorScheme.primary,
+                      onChanged: (value) {
                     setState(() => allowSleep = value!);
                     pushData().then(
                             (success) => print('updated: $success')
                     );
-                  })
+                  }),
+                  const Text('Allow Sleep')
                 ],
               ),
               Row(
@@ -76,20 +94,50 @@ class _SettingsState extends State<Settings> {
                   })
                 ],
               ),
-              TextField(
-                decoration: const InputDecoration(label: Text('Name')),
-                controller: _nameFieldController,
-                onChanged: (value) {
-                  setState(() => name = value);
-                  pushData().then(
-                          (success) => print('updated: $success')
-                  );
-                },
+              const Padding(padding: EdgeInsets.all(25)),
+              const Text('App Options',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)
+              ),
+              Row(
+                children: [
+                  Checkbox(value: darkMode,
+                      activeColor: Theme.of(context).colorScheme.primary,
+                      onChanged: (value) {
+                    setState(() => darkMode = value!);
+                    pushData().then(
+                            (success) => print('updated: $success')
+                    );
+                  }),
+                  const Text('Dark Mode')
+                ],
+              ),
+              Row(
+                children: [
+                  Checkbox(value: offlineMode,
+                      activeColor: Theme.of(context).colorScheme.primary,
+                      onChanged: (value) {
+                    setState(() => offlineMode = value!);
+                    pushData().then(
+                            (success) => print('updated: $success')
+                    );
+                  }),
+                  const Text('Offline Mode')
+                ],
               ),
               const Padding(padding: EdgeInsets.all(50)),
-              OutlinedButton(onPressed: () => {
-                Navigator.of(context).popAndPushNamed('/login')
-              }, child: const Text('Log Out'))
+              OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                      textStyle: const TextStyle(fontSize: 18),
+                      shape: const RoundedRectangleBorder(
+                          side: BorderSide(),
+                          borderRadius: BorderRadius.all(Radius.circular(50)))),
+                  onPressed: () {
+                FirebaseAuth.instance.signOut();
+                Navigator.of(context).popAndPushNamed('/login');
+              }, child: const Text('Log Out')),
+              const Padding(padding: EdgeInsets.all(25)),
             ],
           ))
         ],

@@ -23,6 +23,7 @@ class _ScheduleState extends State<Schedule> {
           ),
           const Padding(padding: EdgeInsets.all(15)),
           Expanded(child: GridView.count(
+            childAspectRatio: 1.5,
             padding: const EdgeInsets.symmetric(horizontal: 30),
               controller: ScrollController(
                   initialScrollOffset: 100*TimeOfDay.now().hour.toDouble(),
@@ -70,6 +71,7 @@ class _ScheduleState extends State<Schedule> {
                 }
 
                 return Container(
+                  height: 10,
                     decoration: BoxDecoration(border: _border, color: _color),
                     child: _child
                 );

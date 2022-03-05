@@ -13,7 +13,6 @@ List<Event> events = [
       end: const TimeOfDay(hour: 17, minute: 0),
       name: 'Another Event',
       color: Colors.orange),
-
 ];
 
 //Home
@@ -25,6 +24,10 @@ bool enabled = false;
 bool movementLocked = false;
 bool allowSleep = false;
 double volume = 0.5;
+
+//Companion App Settings
+bool darkMode = true;
+bool offlineMode = true;
 
 
 

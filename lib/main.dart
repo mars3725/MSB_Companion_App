@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:msb_companion/data.dart';
 import 'firebase_options.dart';
 
 import 'nav.dart';
@@ -14,7 +15,14 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+  final _lightTheme = ThemeData.from(colorScheme: ColorScheme.light(
+      primary: Colors.green.shade800,
+      secondary: Colors.white70));
+
+  final _darkTheme = ThemeData.from(colorScheme: ColorScheme.dark(
+      primary: Colors.green.shade800,
+      secondary: Colors.black87));
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +30,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       showSemanticsDebugger: false,
       title: 'Flutter Demo',
-      theme: ThemeData.from(colorScheme: ColorScheme.dark(
-          primary: Colors.green.shade800,
-          secondary: Colors.black87)),
+      theme: darkMode? _darkTheme : _lightTheme,
       initialRoute: '/login',
       routes: {
         "/login": (context)=> Login(),
-        "/home": (context)=> const Nav()
+        "/nav": (context)=> const Nav()
       },
     );
   }
