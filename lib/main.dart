@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:msb_companion/data.dart';
 import 'firebase_options.dart';
 
 import 'nav.dart';
@@ -24,18 +23,26 @@ class MyApp extends StatelessWidget {
       primary: Colors.green.shade800,
       secondary: Colors.black87));
 
+  static final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      showSemanticsDebugger: false,
-      title: 'Flutter Demo',
-      theme: darkMode? _darkTheme : _lightTheme,
-      initialRoute: '/login',
-      routes: {
-        "/login": (context)=> Login(),
-        "/nav": (context)=> const Nav()
-      },
-    );
+    print(themeNotifier.value);
+
+    return ValueListenableBuilder<ThemeMode>(
+        valueListenable: themeNotifier,
+        builder: (_, ThemeMode themeMode, __) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: _lightTheme,
+            darkTheme: _darkTheme,
+            themeMode: themeMode,
+            initialRoute: '/login',
+            routes: {
+              "/login": (context)=> Login(),
+              "/nav": (context)=> const Nav()
+            },
+          );
+        });
   }
 }

@@ -25,11 +25,10 @@ class _LoginState extends State<Login> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 100),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Flexible(child: Image.asset('assets/logo_alt.png')),
-            const Padding(padding: EdgeInsets.all(10)),
-            const Text('Robot Companion App', style: TextStyle(fontSize: 32)),
+            Flexible(child: Image.asset('assets/logo.png', color: Theme.of(context).colorScheme.inverseSurface)),
+            const Flexible(child: Text('Robot Companion App', style: TextStyle(fontSize: 28))),
             const Padding(padding: EdgeInsets.all(20)),
             TextField(
               autocorrect: false,
@@ -43,7 +42,7 @@ class _LoginState extends State<Login> {
                 setState(() => _email = value);
               },
             ),
-            const Padding(padding: EdgeInsets.all(10)),
+            const Padding(padding: EdgeInsets.all(5)),
             TextField(
               obscureText: true,
               decoration: const InputDecoration(

@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'data.dart';
+import 'main.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -17,6 +16,8 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).platformBrightness);
+
     return Scaffold(
       body: Column(
         children: <Widget>[
@@ -101,13 +102,13 @@ class _SettingsState extends State<Settings> {
               ),
               Row(
                 children: [
-                  Checkbox(value: darkMode,
+                  Checkbox(value: MyApp.themeNotifier.value == ThemeMode.dark,
                       activeColor: Theme.of(context).colorScheme.primary,
                       onChanged: (value) {
-                    setState(() => darkMode = value!);
-                    pushData().then(
-                            (success) => print('updated: $success')
-                    );
+                        MyApp.themeNotifier.value =
+                        MyApp.themeNotifier.value == ThemeMode.light
+                            ? ThemeMode.dark
+                            : ThemeMode.light;
                   }),
                   const Text('Dark Mode')
                 ],
@@ -118,9 +119,6 @@ class _SettingsState extends State<Settings> {
                       activeColor: Theme.of(context).colorScheme.primary,
                       onChanged: (value) {
                     setState(() => offlineMode = value!);
-                    pushData().then(
-                            (success) => print('updated: $success')
-                    );
                   }),
                   const Text('Offline Mode')
                 ],
