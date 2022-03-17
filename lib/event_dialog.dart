@@ -65,8 +65,8 @@ class _EventDialogState extends State<EventDialog> {
               ),
             ),
           ]),
-          const Padding(padding: EdgeInsets.all(10)),
-          Text(_validationText, style: const TextStyle(color: Colors.red)),
+          _validationText != ''? Padding(padding: EdgeInsets.symmetric(vertical: 10), child: Text(_validationText, style: const TextStyle(color: Colors.red)))
+            : Container(),
         ],
       ),
       actionsAlignment: MainAxisAlignment.spaceBetween,

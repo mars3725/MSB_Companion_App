@@ -17,6 +17,7 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     print(MediaQuery.of(context).platformBrightness);
+    print(MyApp.themeNotifier.value);
 
     return Scaffold(
       body: Column(
@@ -102,7 +103,7 @@ class _SettingsState extends State<Settings> {
               ),
               Row(
                 children: [
-                  Checkbox(value: MyApp.themeNotifier.value == ThemeMode.dark,
+                  Checkbox(value: inDarkMode(),
                       activeColor: Theme.of(context).colorScheme.primary,
                       onChanged: (value) {
                         MyApp.themeNotifier.value =
@@ -141,5 +142,16 @@ class _SettingsState extends State<Settings> {
         ],
       ),
     );
+  }
+
+  bool inDarkMode() {
+    switch (MyApp.themeNotifier.value) {
+      case ThemeMode.system:
+        return MediaQuery.of(context).platformBrightness == Brightness.dark;
+      case ThemeMode.light:
+        return false;
+      case ThemeMode.dark:
+        return true;
+    }
   }
 }

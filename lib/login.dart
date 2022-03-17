@@ -17,22 +17,19 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    // if (widget.auth.currentUser != null) {
-    //   Navigator.of(context).pushNamed('/nav');
-    // }
-
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 100),
+        padding: const EdgeInsets.symmetric(horizontal: 48.0, vertical: 100),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Flexible(child: Image.asset('assets/logo.png', color: Theme.of(context).colorScheme.inverseSurface)),
-            const Flexible(child: Text('Robot Companion App', style: TextStyle(fontSize: 28))),
+            const Text('Robot Companion App', style: TextStyle(fontSize: 28)),
             const Padding(padding: EdgeInsets.all(20)),
             TextField(
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Email',
@@ -44,6 +41,7 @@ class _LoginState extends State<Login> {
             ),
             const Padding(padding: EdgeInsets.all(5)),
             TextField(
+              textInputAction: TextInputAction.done,
               obscureText: true,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -55,25 +53,25 @@ class _LoginState extends State<Login> {
               },
             ),
             const Padding(padding: EdgeInsets.all(20)),
-            OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                textStyle: const TextStyle(fontSize: 23),
-                  shape: const RoundedRectangleBorder(
-                      side: BorderSide(),
-                      borderRadius: BorderRadius.all(Radius.circular(50)))),
-              onPressed: () {
-                logIn().then((success) {
-                  if (success) {
-                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                    Navigator.of(context).popAndPushNamed('/nav');
-                  } else {
-                    setState(() => _password = '');
-                  }
-                  });
-              },
-              child: const Text('Login'),
-            ),
+        MediaQuery.of(context).viewInsets.bottom == 0? OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  textStyle: const TextStyle(fontSize: 23),
+                    shape: const RoundedRectangleBorder(
+                        side: BorderSide(),
+                        borderRadius: BorderRadius.all(Radius.circular(50)))),
+                onPressed: () {
+                  logIn().then((success) {
+                    if (success) {
+                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                      Navigator.of(context).popAndPushNamed('/nav');
+                    } else {
+                      setState(() => _password = '');
+                    }
+                    });
+                },
+                child: const Text('Login'),
+              ) : Container(),
           ],
         ),
       ),

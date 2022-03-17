@@ -33,6 +33,7 @@ class _ScheduleState extends State<Schedule> {
                 ),
                 crossAxisCount: 2,
                 children: List.generate(TimeOfDay.hoursPerDay*2, (index) {
+                  print(MediaQuery.of(context).size.height);
                   TimeOfDay time = TimeOfDay(hour: index~/2, minute: 0);
 
                   Border _border = Border.symmetric(horizontal: BorderSide(color: Theme.of(context).colorScheme.inverseSurface));
@@ -105,7 +106,6 @@ class _ScheduleState extends State<Schedule> {
                       }));
                     },
                     child: Container(
-                        height: 10,
                         decoration: BoxDecoration(border: _border, color: _color),
                         child: _child
                     ),
