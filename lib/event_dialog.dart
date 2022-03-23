@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 
 import 'data.dart';
-import 'event.dart';
 
 class EventDialog extends StatefulWidget {
   const EventDialog(this.event, {Key? key, this.newEvent = false}) : super(key: key);
   final bool newEvent;
-  final Event event;
+  final Map<String, dynamic> event;
 
   @override
   _EventDialogState createState() => _EventDialogState();
 }
 
 class _EventDialogState extends State<EventDialog> {
-  late final TextEditingController _nameController = TextEditingController(text: widget.event.name);
-  late final TextEditingController _startController = TextEditingController(text: widget.event.start.format(context));
-  late final TextEditingController _endController = TextEditingController(text: widget.event.end.format(context));
+  late final TextEditingController _nameController = TextEditingController(text: widget.event['name']);
+  late final TextEditingController _startController = TextEditingController(text: TimeOfDay(minute: widget.event['start']%60, hour: widget.event['start']~/60).format(context));
+  late final TextEditingController _endController = TextEditingController(text: TimeOfDay(minute: widget.event['end']%60, hour: widget.event['end']~/60).format(context));
   String _validationText = '';
 
   @override
@@ -29,7 +28,7 @@ class _EventDialogState extends State<EventDialog> {
         children: <Widget>[
           TextField(
               controller: _nameController,
-              onChanged: (value) => widget.event.name = value,
+              onChanged: (value) => widget.event['name'] = value,
               decoration: const InputDecoration(label: Text('Name'))),
           const Padding(padding: EdgeInsets.all(10)),
           Row(mainAxisSize: MainAxisSize.min, children: [
@@ -40,10 +39,10 @@ class _EventDialogState extends State<EventDialog> {
                 controller: _startController,
                 onTap: () async {
                   TimeOfDay? time = await showTimePicker(
-                      initialTime: widget.event.start, context: context);
+                      initialTime: TimeOfDay(minute: widget.event['start']%60, hour: widget.event['start']~/60), context: context);
                   if (time != null) {
                     _startController.text = time.format(context);
-                    widget.event.start = time;
+                    widget.event['start'] = time.hour*60 + time.minute;
                   }
                 },
               ),
@@ -56,16 +55,16 @@ class _EventDialogState extends State<EventDialog> {
                 controller: _endController,
                 onTap: () async {
                   TimeOfDay? time = await showTimePicker(
-                      initialTime: widget.event.end, context: context);
+                      initialTime: TimeOfDay(minute: widget.event['end']%60, hour: widget.event['end']~/60), context: context);
                   if (time != null) {
                     _endController.text = time.format(context);
-                    widget.event.end = time;
+                    widget.event['end'] = time.hour*60 + time.minute;
                   }
                 },
               ),
             ),
           ]),
-          _validationText != ''? Padding(padding: EdgeInsets.symmetric(vertical: 10), child: Text(_validationText, style: const TextStyle(color: Colors.red)))
+          _validationText != ''? Padding(padding: const EdgeInsets.symmetric(vertical: 10), child: Text(_validationText, style: const TextStyle(color: Colors.red)))
             : Container(),
         ],
       ),
@@ -77,19 +76,14 @@ class _EventDialogState extends State<EventDialog> {
         ),
         TextButton(
             onPressed: () {
-              double start = widget.event.start.hour + widget.event.end.minute / 60;
-              double end = widget.event.end.hour + widget.event.end.minute / 60;
-
-              bool hasValidDuration = start < end;
-
-              if (!hasValidDuration) {
+              if (widget.event['start'] > widget.event['end']) {
                 setState(() {
                   _validationText = 'Start time must be earlier than end time';
                 });
                 return;
               }
 
-              print("${widget.event.name}: ${widget.event.start.format(context)} to ${widget.event.end.format(context)}");
+              print("${widget.event['name']}: ${widget.event['start']} to ${widget.event['end']}");
               pushData().then((success) => print('updated: $success'));
 
               widget.newEvent? Navigator.of(context).pop('create') : Navigator.of(context).pop('edit');

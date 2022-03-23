@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:msb_companion/create_account.dart';
 import 'firebase_options.dart';
 
 import 'nav.dart';
@@ -39,8 +40,9 @@ class MyApp extends StatelessWidget {
             themeMode: themeMode,
             initialRoute: '/login',
             routes: {
-              "/login": (context)=> Login(),
-              "/nav": (context)=> const Nav()
+              "/login": (context)=> const Login(),
+              "/nav": (context)=> const Nav(),
+              "/create": (context)=> const CreateAccount()
             },
           );
         });
