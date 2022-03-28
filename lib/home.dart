@@ -68,15 +68,11 @@ class _HomeState extends State<Home> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  IconButton(onPressed: () {
-                    print('initiate message');
-                  },
+                  IconButton(onPressed: () {},
                       iconSize: 48,
                       icon: const Icon(Icons.message)),
                   const Spacer(),
-                  IconButton(onPressed: () {
-                    print('initiate video call');
-                  },
+                  IconButton(onPressed: () {},
                       iconSize: 48,
                       icon: const Icon(Icons.videocam))
                 ],

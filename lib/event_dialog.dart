@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'data.dart';
-
 class EventDialog extends StatefulWidget {
   const EventDialog(this.event, {Key? key, this.newEvent = false}) : super(key: key);
   final bool newEvent;
@@ -28,6 +26,7 @@ class _EventDialogState extends State<EventDialog> {
         children: <Widget>[
           TextField(
               controller: _nameController,
+              textCapitalization: TextCapitalization.words,
               onChanged: (value) => widget.event['name'] = value,
               decoration: const InputDecoration(label: Text('Name'))),
           const Padding(padding: EdgeInsets.all(10)),
@@ -83,10 +82,7 @@ class _EventDialogState extends State<EventDialog> {
                 return;
               }
 
-              print("${widget.event['name']}: ${widget.event['start']} to ${widget.event['end']}");
-              pushData().then((success) => print('updated: $success'));
-
-              widget.newEvent? Navigator.of(context).pop('create') : Navigator.of(context).pop('edit');
+              Navigator.of(context).pop('done');
               setState(() {
               });
             },

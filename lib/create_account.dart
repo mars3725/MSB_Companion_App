@@ -151,7 +151,6 @@ class _CreateAccountState extends State<CreateAccount> {
       }
 
     } on FirebaseAuthException catch (exception) {
-      print(exception.code);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(exception.code), backgroundColor: Colors.red.shade800));
       return false;
     }

@@ -17,9 +17,6 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
-    print(MediaQuery.of(context).platformBrightness);
-    print(MyApp.themeNotifier.value);
-
     return Scaffold(
       body: StreamBuilder<DocumentSnapshot>(
         stream: robotDoc!.snapshots(),
@@ -63,9 +60,6 @@ class _SettingsState extends State<Settings> {
                           activeColor: Theme.of(context).colorScheme.primary,
                           onChanged: (value) {
                         setState(() => enabled = value!);
-                        pushData().then(
-                                (success) => print('updated: $success')
-                        );
                       }),
                       const Text('Enabled')
                     ],
@@ -76,9 +70,6 @@ class _SettingsState extends State<Settings> {
                           activeColor: Theme.of(context).colorScheme.primary,
                           onChanged: (value) {
                         setState(() => movementLocked = value!);
-                        pushData().then(
-                                (success) => print('updated: $success')
-                        );
                       }),
                       const Text('Lock Movement')
                     ],
@@ -89,9 +80,6 @@ class _SettingsState extends State<Settings> {
                           activeColor: Theme.of(context).colorScheme.primary,
                           onChanged: (value) {
                         setState(() => allowSleep = value!);
-                        pushData().then(
-                                (success) => print('updated: $success')
-                        );
                       }),
                       const Text('Allow Sleep')
                     ],
@@ -102,9 +90,6 @@ class _SettingsState extends State<Settings> {
                       const Text('Volume'),
                       Slider(value: volume, onChanged: (value) {
                         setState(() => volume = value);
-                        pushData().then(
-                                (success) => print('updated: $success')
-                        );
                       })
                     ],
                   ),
