@@ -108,7 +108,7 @@ class _ScheduleViewState extends State<ScheduleView> {
         body: Column(
           children: [
             const Padding(
-              padding: EdgeInsets.only(top: 100, bottom: 15),
+              padding: EdgeInsets.only(top: 50, bottom: 15),
               child: Text('Schedule',
                   style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold)),
             ),
@@ -127,9 +127,8 @@ class _ScheduleViewState extends State<ScheduleView> {
                     children: [...times,
                       ...events,
                       Positioned(
-                        top: 60*widget.scale*TimeOfDay.now().hour+TimeOfDay.now().minute,
+                        top: 60*widget.scale*TimeOfDay.now().hour+TimeOfDay.now().minute*widget.scale,
                         left: 15,
-                        height: 60*widget.scale,
                         width: MediaQuery.of(context).size.width-30,
                         child: const Divider(color: Colors.orange, height: 4, thickness: 4),
                       )],

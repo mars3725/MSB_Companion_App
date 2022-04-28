@@ -24,7 +24,7 @@ class _SettingsViewState extends State<SettingsView> {
       body: Column(
         children: <Widget>[
           const Padding(
-            padding: EdgeInsets.only(top: 100, bottom: 50),
+            padding: EdgeInsets.only(top: 50, bottom: 15),
             child: Text('Settings',
                 style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold)),
           ),
@@ -33,9 +33,10 @@ class _SettingsViewState extends State<SettingsView> {
             padding: const EdgeInsets.symmetric(horizontal: 50),
             children: [
               const Text('Robot Options',
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.left,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)
               ),
+              const Padding(padding: EdgeInsets.all(10)),
               TextField(
                 decoration: const InputDecoration(label: Text('Name')),
                 controller: _nameFieldController,
@@ -84,9 +85,10 @@ class _SettingsViewState extends State<SettingsView> {
               ),
               const Padding(padding: EdgeInsets.all(25)),
               const Text('App Options',
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.left,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)
               ),
+              const Padding(padding: EdgeInsets.all(10)),
               Row(
                 children: [
                   Checkbox(value: inDarkMode(),

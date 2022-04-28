@@ -16,11 +16,11 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 100, bottom: 50, left: 30, right: 30),
+      padding: const EdgeInsets.only(top: 50, bottom: 50, left: 30, right: 30),
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 15),
+            padding: const EdgeInsets.only(bottom: 25),
             child: Text(widget.data.get('name'),
                 style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold)),
           ),
