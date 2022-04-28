@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:msb_companion/create_account.dart';
 import 'firebase_options.dart';
 
 import 'nav.dart';
-import 'login.dart';
+import 'views/authenticate_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,9 +37,8 @@ class MyApp extends StatelessWidget {
             themeMode: themeMode,
             initialRoute: '/login',
             routes: {
-              "/login": (context)=> const Login(),
+              "/login": (context)=> const AuthenticateView(),
               "/nav": (context)=> const Nav(),
-              "/create": (context)=> const CreateAccount()
             },
           );
         });

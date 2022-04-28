@@ -1,17 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:msb_companion/home.dart';
-import 'package:msb_companion/schedule.dart';
-import 'package:msb_companion/settings.dart';
+import 'package:msb_companion/views/home_view.dart';
+import 'package:msb_companion/views/schedule_view.dart';
+import 'package:msb_companion/views/settings_view.dart';
 
-import 'schedule.dart';
+import 'data.dart';
+import 'views/schedule_view.dart';
 
 class Nav extends StatefulWidget {
   const Nav({Key? key}) : super(key: key);
-  static const widgetOptions = [
-    Schedule(),
-    Home(),
-    Settings()
-  ];
 
   @override
   State<Nav> createState() => _NavState();
@@ -29,17 +26,28 @@ class _NavState extends State<Nav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onHorizontalDragEnd: (drag) {
-          if (!drag.primaryVelocity!.isNegative && _selectedIndex > 0) {
-            setState(() => _selectedIndex--);
-          } else if (drag.primaryVelocity!.isNegative && _selectedIndex < 2) {
-            setState(() => _selectedIndex++);
+      body: (StreamBuilder<DocumentSnapshot>(
+          stream: robotDoc!.snapshots(),
+          builder: (context, snapshot) {
+            print('build');
+
+            if (snapshot.hasError) {
+              return const Center(child: Text('Something went wrong'));
+            }
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            return SafeArea(
+              child: IndexedStack(children: [
+                ScheduleView(data: snapshot.data!),
+                HomeView(data: snapshot.data!),
+                SettingsView(data: snapshot.data!)
+              ], index: _selectedIndex),
+            );
           }
-        },
-        child: Nav.widgetOptions.elementAt(_selectedIndex),
-      ),
+      )),
       bottomNavigationBar: BottomNavigationBar(
         selectedIconTheme: Theme.of(context).iconTheme.copyWith(color: Theme.of(context).colorScheme.primary),
         items: const <BottomNavigationBarItem>[
